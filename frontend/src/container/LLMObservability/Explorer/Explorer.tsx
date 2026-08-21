@@ -51,7 +51,7 @@ import {
 } from 'utils/explorerUtils';
 import { v4 } from 'uuid';
 
-import { TOOLBAR_VIEWS } from './constants';
+import { DEFAULT_PANEL_TYPE, TOOLBAR_VIEWS } from './constants';
 import ListView from './ListView/ListView';
 import { defaultSelectedColumns } from './ListView/configs';
 import QuerySection from './QuerySection/QuerySection';
@@ -88,7 +88,7 @@ function Explorer(): JSX.Element {
 	const listQueryKeyRef = useRef<any>();
 
 	// Get panel type from URL
-	const panelTypesFromUrl = useGetPanelTypesQueryParam(PANEL_TYPES.LIST);
+	const panelTypesFromUrl = useGetPanelTypesQueryParam(DEFAULT_PANEL_TYPE);
 	const [isLoadingQueries, setIsLoadingQueries] = useState<boolean>(false);
 	const [isCancelled, setIsCancelled] = useState(false);
 
@@ -119,7 +119,7 @@ function Explorer(): JSX.Element {
 		(): Query =>
 			updateAllQueriesOperators(
 				initialQueryAIWithType,
-				PANEL_TYPES.LIST,
+				DEFAULT_PANEL_TYPE,
 				DataSource.TRACES,
 			),
 		[updateAllQueriesOperators],
@@ -186,7 +186,7 @@ function Explorer(): JSX.Element {
 		() =>
 			getQueryByPanelType(
 				stagedQuery || initialQueryAIWithType,
-				panelType || PANEL_TYPES.LIST,
+				panelType || DEFAULT_PANEL_TYPE,
 			),
 		[stagedQuery, panelType],
 	);
