@@ -11,7 +11,7 @@ import QuickFilters from 'components/QuickFilters/QuickFilters';
 import { QuickFiltersSource, SignalType } from 'components/QuickFilters/types';
 import WarningPopover from 'components/WarningPopover/WarningPopover';
 import { AVAILABLE_EXPORT_PANEL_TYPES } from 'constants/panelTypes';
-import { initialQueriesMap, PANEL_TYPES } from 'constants/queryBuilder';
+import { initialQueryAIWithType, PANEL_TYPES } from 'constants/queryBuilder';
 import { usePageActions } from 'container/AIAssistant/pageActions/usePageActions';
 import ExplorerOptionWrapper from 'container/ExplorerOptions/ExplorerOptionWrapper';
 import { useOptionsMenu } from 'container/OptionsMenu';
@@ -118,7 +118,7 @@ function Explorer(): JSX.Element {
 	const defaultQuery = useMemo(
 		(): Query =>
 			updateAllQueriesOperators(
-				initialQueriesMap.traces,
+				initialQueryAIWithType,
 				PANEL_TYPES.LIST,
 				DataSource.TRACES,
 			),
@@ -185,7 +185,7 @@ function Explorer(): JSX.Element {
 	const exportDefaultQuery = useMemo(
 		() =>
 			getQueryByPanelType(
-				stagedQuery || initialQueriesMap.traces,
+				stagedQuery || initialQueryAIWithType,
 				panelType || PANEL_TYPES.LIST,
 			),
 		[stagedQuery, panelType],
