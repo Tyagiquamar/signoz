@@ -11,49 +11,42 @@ export const PER_PAGE_OPTIONS: number[] = [10, ...DEFAULT_PER_PAGE_OPTIONS];
 /** Always visible: it is the row's link to the trace. */
 export const TRACE_ID_COLUMN_ID = 'trace_id';
 
-/** Every column the AI trace list returns; the query computes the whole set regardless. */
-export const traceViewFields: TelemetryFieldKey[] = [
+/**
+ * Display-only columns: the trace list returns them, but the keys endpoint cannot
+ * report them because ordering or filtering on one is an error. The orderable
+ * aggregates are absent here on purpose — they come from the endpoint.
+ */
+export const DISPLAY_ONLY_FIELDS: TelemetryFieldKey[] = [
 	{ name: 'service.name', fieldContext: 'resource' },
 	{ name: 'root_span_name' },
 	{ name: 'trace_duration_nano' },
 	{ name: 'span_count' },
-	{ name: 'llm_call_count' },
-	{ name: 'total_tokens' },
-	{ name: 'estimated_total_cost' },
 	{ name: TRACE_ID_COLUMN_ID },
-	{ name: 'last_activity_time' },
 	{ name: 'start_time' },
 	{ name: 'end_time' },
-	{ name: 'max_llm_duration_nano' },
-	{ name: 'tool_call_count' },
-	{ name: 'distinct_tool_count' },
-	{ name: 'input_tokens' },
-	{ name: 'output_tokens' },
 	{ name: 'error_count' },
 	{ name: 'input' },
 	{ name: 'output' },
 ] as TelemetryFieldKey[];
 
-/** Off until picked in the fields selector: long text, or narrower interest. */
-const HIDDEN_BY_DEFAULT = new Set([
-	'last_activity_time',
-	'start_time',
-	'end_time',
-	'max_llm_duration_nano',
-	'tool_call_count',
-	'distinct_tool_count',
-	'input_tokens',
-	'output_tokens',
-	'error_count',
-	'input',
-	'output',
+/** Everything else starts hidden, including any aggregate the endpoint adds later. */
+const DEFAULT_VISIBLE_FIELDS = new Set([
+	'service.name',
+	'root_span_name',
+	'trace_duration_nano',
+	'span_count',
+	'llm_call_count',
+	'total_tokens',
+	'estimated_total_cost',
+	TRACE_ID_COLUMN_ID,
 ]);
 
-export const columns: TableColumnDef<TracesTableRow>[] = traceViewFields.map(
-	(field) => ({
+export const buildTraceViewColumns = (
+	fields: TelemetryFieldKey[],
+): TableColumnDef<TracesTableRow>[] =>
+	fields.map((field) => ({
 		...getFieldColumn(field),
-		defaultVisibility: !HIDDEN_BY_DEFAULT.has(field.name),
+		defaultVisibility: DEFAULT_VISIBLE_FIELDS.has(field.name),
 		enableRemove: field.name !== TRACE_ID_COLUMN_ID,
 		canBeHidden: field.name !== TRACE_ID_COLUMN_ID,
-	}),
-);
+	}));

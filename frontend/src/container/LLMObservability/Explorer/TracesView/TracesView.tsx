@@ -38,7 +38,7 @@ import {
 	TRACE_VIEW_DEFAULT_ORDER_BY,
 	TRACE_VIEW_STATIC_ORDER_BY_KEYS,
 } from '../constants';
-import { columns, PER_PAGE_OPTIONS } from './configs';
+import { PER_PAGE_OPTIONS } from './configs';
 import { useTraceViewColumns } from './useTraceViewColumns';
 import styles from './TracesView.module.scss';
 
@@ -59,8 +59,14 @@ function TracesView({
 
 	const [orderBy, setOrderBy] = useState<string>(TRACE_VIEW_DEFAULT_ORDER_BY);
 
-	const { availableFields, selectedFields, onFieldsChange, requiredFields } =
-		useTraceViewColumns();
+	const {
+		columns,
+		availableFields,
+		selectedFields,
+		onFieldsChange,
+		requiredFields,
+		isLoading: isColumnsLoading,
+	} = useTraceViewColumns();
 
 	const {
 		selectedTime: globalSelectedTime,
@@ -203,7 +209,7 @@ function TracesView({
 				respectColumnOrder
 				panelType="TRACE"
 				getRowHref={getTraceLink}
-				isLoading={isLoading}
+				isLoading={isLoading || isColumnsLoading}
 				isFetching={isFetching}
 				isError={isError}
 				error={error}
