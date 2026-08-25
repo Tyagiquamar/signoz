@@ -16,7 +16,6 @@ import { githubLight } from '@uiw/codemirror-theme-github';
 import CodeMirror, { EditorView, keymap, Prec } from '@uiw/react-codemirror';
 import { Button, Card, Collapse, Popover, Tooltip } from 'antd';
 import { Badge } from '@signozhq/ui/badge';
-import { getValueSuggestions } from 'api/querySuggestions/getValueSuggestion';
 import cx from 'classnames';
 import {
 	negationQueryOperatorSuggestions,
@@ -55,9 +54,10 @@ import {
 } from './constants';
 import {
 	fetchFieldKeysForQuery,
+	fetchFieldValuesForQuery,
 	SuggestedFieldKey,
 	SuggestedFieldKeysByName,
-} from './keySuggestions';
+} from './fieldSuggestions';
 import {
 	combineInitialAndUserExpression,
 	dedupeOptionsByLabel,
@@ -247,6 +247,12 @@ function QuerySearch({
 		() => dedupeOptionsByLabel(keySuggestions || []),
 		[keySuggestions],
 	);
+
+	// read inside fetchValueSuggestions so resolving a key's context does not churn its deps
+	const keySuggestionsRef = useRef<QueryKeyDataSuggestionsProps[]>([]);
+	useEffect(() => {
+		keySuggestionsRef.current = keySuggestions || [];
+	}, [keySuggestions]);
 
 	const [showExamples] = useState(false);
 
@@ -499,21 +505,16 @@ function QuerySearch({
 			try {
 				const values = valueSuggestionsOverride
 					? await valueSuggestionsOverride(key, sanitizedSearchText)
-					: await getValueSuggestions({
+					: await fetchFieldValuesForQuery({
+							builderQueryType: queryData.builderQueryType,
+							dataSource,
 							key,
 							searchText: sanitizedSearchText,
-							signal: dataSource,
+							fieldContext: keySuggestionsRef.current.find(
+								(option) => option.label === key,
+							)?.fieldContext,
 							signalSource: signalSource as 'meter' | '',
 							metricName: debouncedMetricName ?? undefined,
-						}).then((response) => {
-							const responseData = response.data as any;
-							const data = responseData.data || {};
-							const values = data.values || {};
-							return {
-								stringValues: values.stringValues || [],
-								numberValues: values.numberValues || [],
-								complete: data.complete ?? false,
-							};
 						});
 
 				// Skip updates if component unmounted or key changed
@@ -607,6 +608,7 @@ function QuerySearch({
 			signalSource,
 			toggleSuggestions,
 			valueSuggestionsOverride,
+			queryData.builderQueryType,
 		],
 	);
 
