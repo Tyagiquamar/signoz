@@ -10,6 +10,7 @@ import QueryCancelledPlaceholder from 'components/QueryCancelledPlaceholder';
 import QuickFilters from 'components/QuickFilters/QuickFilters';
 import { QuickFiltersSource, SignalType } from 'components/QuickFilters/types';
 import WarningPopover from 'components/WarningPopover/WarningPopover';
+import { LOCALSTORAGE } from 'constants/localStorage';
 import { AVAILABLE_EXPORT_PANEL_TYPES } from 'constants/panelTypes';
 import { initialQueryAIWithType, PANEL_TYPES } from 'constants/queryBuilder';
 import { usePageActions } from 'container/AIAssistant/pageActions/usePageActions';
@@ -76,6 +77,7 @@ function Explorer(): JSX.Element {
 	const isAIAssistantEnabled = useIsAIAssistantEnabled();
 
 	const { options } = useOptionsMenu({
+		storageKey: LOCALSTORAGE.AI_OBSERVABILITY_LIST_OPTIONS,
 		dataSource: DataSource.TRACES,
 		aggregateOperator: 'noop',
 		initialOptions: {
