@@ -44,6 +44,7 @@ const ALL_LEAF_ACTIONS = [
 	LogDetailsAction.FILTER_OUT,
 	LogDetailsAction.GROUP_BY,
 	LogDetailsAction.REPLACE_FILTER,
+	LogDetailsAction.PIN,
 ];
 
 /**
