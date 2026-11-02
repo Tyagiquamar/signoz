@@ -212,6 +212,76 @@ const unitsMapping = [
 				factor: BIT_FACTOR * BINARY_FACTOR ** 2, // 1 MiB = 8 Mibits
 			},
 			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.MEGABYTES_SECOND],
+				value: 'MBs',
+				factor: DECIMAL_FACTOR ** 2,
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.MEGABITS_SECOND],
+				value: 'Mbits',
+				factor: BIT_FACTOR * DECIMAL_FACTOR ** 2, // 1 MB = 8 Mbits
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.GIBIBYTES_SECOND],
+				value: 'GiBs',
+				factor: BINARY_FACTOR ** 3,
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.GIBIBITS_SECOND],
+				value: 'Gibits',
+				factor: BIT_FACTOR * BINARY_FACTOR ** 3, // 1 GiB = 8 Gibits
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.GIGABYTES_SECOND],
+				value: 'GBs',
+				factor: DECIMAL_FACTOR ** 3,
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.GIGABITS_SECOND],
+				value: 'Gbits',
+				factor: BIT_FACTOR * DECIMAL_FACTOR ** 3, // 1 GB = 8 Gbits
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.TEBIBYTES_SECOND],
+				value: 'TiBs',
+				factor: BINARY_FACTOR ** 4,
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.TEBIBITS_SECOND],
+				value: 'Tibits',
+				factor: BIT_FACTOR * BINARY_FACTOR ** 4, // 1 TiB = 8 Tibits
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.TERABYTES_SECOND],
+				value: 'TBs',
+				factor: DECIMAL_FACTOR ** 4,
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.TERABITS_SECOND],
+				value: 'Tbits',
+				factor: BIT_FACTOR * DECIMAL_FACTOR ** 4, // 1 TB = 8 Tbits
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.PEBIBYTES_SECOND],
+				value: 'PiBs',
+				factor: BINARY_FACTOR ** 5,
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.PEBIBITS_SECOND],
+				value: 'Pibits',
+				factor: BIT_FACTOR * BINARY_FACTOR ** 5, // 1 PiB = 8 Pibits
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.PETABYTES_SECOND],
+				value: 'PBs',
+				factor: DECIMAL_FACTOR ** 5,
+			},
+			{
+				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.PETABITS_SECOND],
+				value: 'Pbits',
+				factor: BIT_FACTOR * DECIMAL_FACTOR ** 5, // 1 PB = 8 Pbits
+			},
+			{
 				label: Y_AXIS_UNIT_NAMES[UniversalYAxisUnit.EXABYTES_SECOND],
 				value: UniversalYAxisUnit.EXABYTES_SECOND,
 				factor: DECIMAL_FACTOR ** 6,

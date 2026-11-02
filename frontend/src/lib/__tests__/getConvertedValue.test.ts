@@ -90,6 +90,28 @@ describe('convertValue', () => {
 		it('should convert kibibytes/sec to bytes/sec', () => {
 			expect(convertValue(1, 'KiBs', 'binBps')).toBe(1024);
 		});
+
+		it('should convert gigabytes/sec to megabytes/sec', () => {
+			expect(convertValue(1, 'GBs', 'MBs')).toBe(1000);
+		});
+
+		it('should convert megabits/sec to megabytes/sec', () => {
+			expect(convertValue(1, 'Mbits', 'MBs')).toBe(0.125);
+		});
+
+		it('should convert gibibytes/sec to mebibytes/sec', () => {
+			expect(convertValue(1, 'GiBs', 'MiBs')).toBe(1024);
+		});
+
+		it('should convert universal data rate units that map to MBs and GBs', () => {
+			expect(
+				convertValue(
+					1,
+					UniversalYAxisUnit.GIGABYTES_SECOND,
+					UniversalYAxisUnit.MEGABYTES_SECOND,
+				),
+			).toBe(1000);
+		});
 	});
 
 	describe('throughput', () => {
